@@ -1,7 +1,7 @@
 'use strict'
 
 const ackeeTracker = require('ackee-tracker');
-const { writable } = require('svelte/store"')
+const { writable } = require('svelte/store')
 
 let hasChanged = false;
 

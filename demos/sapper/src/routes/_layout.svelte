@@ -1,8 +1,8 @@
 <script>
 	import Nav from '../components/Nav.svelte';
 	import { afterUpdate , beforeUpdate} from "svelte";
-	// import {useAckeeSapper} from './../ackee.js';
-	import {useAckeeSapper} from 'svelte-ackee';
+	import {useAckeeSapper} from './../ackee.js';
+	// import {useAckeeSapper} from 'svelte-ackee';
 
 	export let segment;
 

@@ -1,25 +1,17 @@
-import ackeeTracker from 'ackee-tracker';
+'use strict'
 
-import { writable, derived } from "svelte/store";
+const ackeeTracker = require('ackee-tracker');
+const { writable } = require('svelte/store')
 
 let hasChanged = false;
 
-export const locationStore = writable({
+const locationStore = writable({
   current:  undefined,
   previous: undefined,
 });
 
-export const routeHasChanged = derived(locationStore, ($l) => {
-
-  if (!$l.previous || !$l.current) return true;
-
-  if ($l.previous.pathname !== $l.current.pathname) return true;
-
-  return false;
-});
 
 locationStore.subscribe( l => {
-  console.log(l)
   if ( (!l.previous || !l.current) || (l.previous.pathname !== l.current.pathname)) 
     hasChanged = true;
   else
@@ -27,8 +19,16 @@ locationStore.subscribe( l => {
 
 })
 
-
-export function useAckeeSapper(beforeUpdate, afterUpdate, server, opts = {}) {
+/**
+ * Use Ackee in Svelte and Sapper.
+ * Creates an instance once and a new record every time the pathname changes.
+ * * @param {?Function} beforeUpdate - Svelte component life cycle event.
+ * * @param {?Function} afterUpdate - Svelte component life cycle event.
+ * @param {?String} pathname - Current path.
+ * @param {Object} server - Server details.
+ * @param {?Object} opts - Ackee options.
+ */
+const useAckeeSapper = function(beforeUpdate, afterUpdate, server, opts = {}) {
   let currentInstance = ackeeTracker.create(server, opts);
   beforeUpdate(() => {
     if (typeof window !== "undefined") {
@@ -55,10 +55,15 @@ export function useAckeeSapper(beforeUpdate, afterUpdate, server, opts = {}) {
   });
 }
 
-/*
-* USE ACKEE FOR SPA SVELTE
-*/
-export function useAckeeSvelte( afterPageLoad, server, opts = {}){
+/**
+ * Use Ackee in Svelte with Routify.
+ * Creates an instance once and a new record every time the pathname changes.
+ * * @param {?Function} afterPageLoad - Routify event.
+ * @param {?String} pathname - Current path.
+ * @param {Object} server - Server details.
+ * @param {?Object} opts - Ackee options.
+ */
+const useAckeeSvelte = function( afterPageLoad, server, opts = {}){
   let currentInstance = ackeeTracker.create(server, opts)
 	
 	afterPageLoad(page => {
@@ -71,7 +76,6 @@ export function useAckeeSvelte( afterPageLoad, server, opts = {}){
         };
       });
     }
-    console.log('DENTRO', hasChanged);
     if (hasChanged) {
   		
       let path = window.location.pathname
@@ -89,3 +93,8 @@ export function useAckeeSvelte( afterPageLoad, server, opts = {}){
 	})
 	
 }
+
+module.exports = {
+  useAckeeSapper,
+  useAckeeSvelte
+};
