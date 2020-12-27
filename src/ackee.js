@@ -1,4 +1,5 @@
-import ackeeTracker from 'ackee-tracker';
+// import ackeeTracker from 'ackee-tracker';
+const ackeeTracker = require('ackee-tracker');
 
 import { writable, derived } from "svelte/store";
 
