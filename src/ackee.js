@@ -1,7 +1,7 @@
-// import ackeeTracker from 'ackee-tracker';
-const ackeeTracker = require('ackee-tracker');
+'use strict'
 
-import { writable, derived } from "svelte/store";
+const ackeeTracker = require('ackee-tracker');
+const { writable } = require('svelte/store"')
 
 let hasChanged = false;
 
@@ -10,14 +10,6 @@ export const locationStore = writable({
   previous: undefined,
 });
 
-export const routeHasChanged = derived(locationStore, ($l) => {
-
-  if (!$l.previous || !$l.current) return true;
-
-  if ($l.previous.pathname !== $l.current.pathname) return true;
-
-  return false;
-});
 
 locationStore.subscribe( l => {
   if ( (!l.previous || !l.current) || (l.previous.pathname !== l.current.pathname)) 
@@ -27,7 +19,15 @@ locationStore.subscribe( l => {
 
 })
 
-
+/**
+ * Use Ackee in Svelte and Sapper.
+ * Creates an instance once and a new record every time the pathname changes.
+ * * @param {?Function} beforeUpdate - Svelte component life cycle event.
+ * * @param {?Function} afterUpdate - Svelte component life cycle event.
+ * @param {?String} pathname - Current path.
+ * @param {Object} server - Server details.
+ * @param {?Object} opts - Ackee options.
+ */
 export function useAckeeSapper(beforeUpdate, afterUpdate, server, opts = {}) {
   let currentInstance = ackeeTracker.create(server, opts);
   beforeUpdate(() => {
@@ -55,9 +55,14 @@ export function useAckeeSapper(beforeUpdate, afterUpdate, server, opts = {}) {
   });
 }
 
-/*
-* USE ACKEE FOR SPA SVELTE
-*/
+/**
+ * Use Ackee in Svelte with Routify.
+ * Creates an instance once and a new record every time the pathname changes.
+ * * @param {?Function} afterPageLoad - Routify event.
+ * @param {?String} pathname - Current path.
+ * @param {Object} server - Server details.
+ * @param {?Object} opts - Ackee options.
+ */
 export function useAckeeSvelte( afterPageLoad, server, opts = {}){
   let currentInstance = ackeeTracker.create(server, opts)
 	
