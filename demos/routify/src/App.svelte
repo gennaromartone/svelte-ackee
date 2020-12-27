@@ -1,7 +1,7 @@
 <script>
   import { Router } from "@roxi/routify";
   import { routes } from "../.routify/routes";
-  import useAckeeSvelte from './../../../ackee.js';
+  import useAckeeSvelte from 'svelte-ackee';
 
   import { afterPageLoad } from "@roxi/routify"
   

@@ -1,5 +1,3 @@
-
-import { writable } from 'svelte/store';
 import ackeeTracker from 'ackee-tracker';
 
 import { writable, derived } from "svelte/store";
