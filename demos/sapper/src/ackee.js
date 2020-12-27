@@ -19,6 +19,7 @@ export const routeHasChanged = derived(locationStore, ($l) => {
 });
 
 locationStore.subscribe( l => {
+  console.log(l)
   if ( (!l.previous || !l.current) || (l.previous.pathname !== l.current.pathname)) 
     hasChanged = true;
   else
@@ -70,6 +71,7 @@ export function useAckeeSvelte( afterPageLoad, server, opts = {}){
         };
       });
     }
+    console.log('DENTRO', hasChanged);
     if (hasChanged) {
   		
       let path = window.location.pathname
