@@ -5,12 +5,12 @@ import { beforeUpdate } from "svelte";
 
 
 
-export const location = writable({
+export const locationStore = writable({
   current: Location || undefined,
   previous: Location || undefined,
 });
 
-export const routeHasChanged = derived(location, ($l) => {
+export const routeHasChanged = derived(locationStore, ($l) => {
   if (!$l.previous || !$l.current) return true;
 
   if ($l.previous.pathname !== $l.current.pathname) return true;
@@ -22,7 +22,7 @@ export function useAckeeSapper(afterUpdate, server, opts = {}) {
   let currentInstance = ackeeTracker.create(server, opts)
   beforeUpdate(() => {
     if (typeof window !== "undefined") {
-      location.update((l) => {
+      locationStore.update((l) => {
         return {
           previous: l.current,
           current: { ...window.location },
@@ -35,7 +35,7 @@ export function useAckeeSapper(afterUpdate, server, opts = {}) {
     if ($routeHasChanged) {
 		let path = window.location.pathname
 
-	  	const attributes = ackeeTracker.attributes(opts.detailed)
+	  const attributes = ackeeTracker.attributes(opts.detailed)
 		const url = new URL(path, location)
 
 		currentInstance.record({
