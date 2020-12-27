@@ -33,15 +33,15 @@ export function useAckeeSapper(afterUpdate, server, opts = {}) {
   afterUpdate(() => {
     console.log('DENTRO', $routeHasChanged)
     if ($routeHasChanged) {
-		let path = window.location.pathname
+      let path = window.location.pathname
 
-	  const attributes = ackeeTracker.attributes(opts.detailed)
-		const url = new URL(path, location)
+      const attributes = ackeeTracker.attributes(opts.detailed)
+      const url = new URL(path, location)
 
-		currentInstance.record({
-			...attributes,
-			siteLocation: url.href
-		}).stop
+      currentInstance.record({
+        ...attributes,
+        siteLocation: url.href
+      }).stop
     }
   });
 }
@@ -50,19 +50,33 @@ export function useAckeeSapper(afterUpdate, server, opts = {}) {
 * USE ACKEE FOR SPA SVELTE
 */
 export default function useAckeeSvelte( afterPageLoad, server, opts = {}){
-    let currentInstance = ackeeTracker.create(server, opts)
+  let currentInstance = ackeeTracker.create(server, opts)
 	
 	afterPageLoad(page => {
+
+    if (typeof window !== "undefined") {
+      locationStore.update((l) => {
+        return {
+          previous: l.current,
+          current: { ...window.location },
+        };
+      });
+    }
+    console.log('DENTRO', $routeHasChanged)
+    if ($routeHasChanged) {
   		
-		let path = window.location.pathname
+      let path = window.location.pathname
 
-	  	const attributes = ackeeTracker.attributes(opts.detailed)
-		const url = new URL(path, location)
+      const attributes = ackeeTracker.attributes(opts.detailed)
+      const url = new URL(path, location)
 
-		currentInstance.record({
-			...attributes,
-			siteLocation: url.href
-		}).stop
+      currentInstance.record({
+        ...attributes,
+        siteLocation: url.href
+      }).stop
+
+    }
+
 	})
 	
 }

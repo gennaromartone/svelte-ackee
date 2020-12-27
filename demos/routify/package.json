@@ -65,6 +65,6 @@
     ]
   },
   "dependencies": {
-    "svelte-ackee": "^1.2.0"
+    "svelte-ackee": "^1.2.1"
   }
 }
