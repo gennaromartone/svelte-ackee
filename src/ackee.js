@@ -5,7 +5,7 @@ const { writable } = require('svelte/store"')
 
 let hasChanged = false;
 
-export const locationStore = writable({
+const locationStore = writable({
   current:  undefined,
   previous: undefined,
 });
@@ -28,7 +28,7 @@ locationStore.subscribe( l => {
  * @param {Object} server - Server details.
  * @param {?Object} opts - Ackee options.
  */
-export function useAckeeSapper(beforeUpdate, afterUpdate, server, opts = {}) {
+const useAckeeSapper = function(beforeUpdate, afterUpdate, server, opts = {}) {
   let currentInstance = ackeeTracker.create(server, opts);
   beforeUpdate(() => {
     if (typeof window !== "undefined") {
@@ -63,7 +63,7 @@ export function useAckeeSapper(beforeUpdate, afterUpdate, server, opts = {}) {
  * @param {Object} server - Server details.
  * @param {?Object} opts - Ackee options.
  */
-export function useAckeeSvelte( afterPageLoad, server, opts = {}){
+const useAckeeSvelte = function( afterPageLoad, server, opts = {}){
   let currentInstance = ackeeTracker.create(server, opts)
 	
 	afterPageLoad(page => {
@@ -93,3 +93,8 @@ export function useAckeeSvelte( afterPageLoad, server, opts = {}){
 	})
 	
 }
+
+module.exports = {
+  useAckeeSapper,
+  useAckeeSvelte
+};
