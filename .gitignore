@@ -1,0 +1,16 @@
+.DS_Store
+/node_modules/
+/src/demos/sapper/node_modules/
+/src/demos/sapper/__sapper__/
+yarn-error.log
+/cypress/screenshots/
+/src/demos/routify/**/node_modules/
+/src/demos/routify/dist/
+/src/demos/routify/.DS_Store
+/src/demos/routify/**/.history
+/src/demos/routify/src/tmp/
+/src/demos/routify/.routify
+/src/demos/routify/.netlify
+/src/demos/routify/assets/build
+/src/demos/routify/.vercel
+

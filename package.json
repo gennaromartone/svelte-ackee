@@ -1,0 +1,27 @@
+{
+  "name": "svelte-ackee",
+  "version": "1.0.0",
+  "description": "Use Ackee in Svelte",
+  "main": "src/ackee.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electerious/use-ackee.git"
+  },
+  "keywords": [
+    "Ackee",
+    "Svelte"
+  ],
+  "author": "Gennaro Martone",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/electerious/use-ackee/issues"
+  },
+  "homepage": "https://github.com/electerious/use-ackee#readme",
+  "dependencies": {
+    "ackee-tracker": "^4.2.0",
+    "svelte": "^3.31.0"
+  }
+}
